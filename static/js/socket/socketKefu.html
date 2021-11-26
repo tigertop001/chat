@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./socket.io.js"></script>
+</head>
+<body>
+    <div>socket kefu test</div>
+    <script>
+        let socket = window.io('ws://192.168.80.66:8036/im/agent?userid=dubai001');
+        socket.on('connect', (res) => {
+            console.log("socket 链接成功！",res);
+            socket.emit('message', {
+                userid: "kevin001",
+                type: "message",
+                sessionid: "s00000001",
+                agentuser: "dubai001",
+                touser: "kevin001",
+                message:"test xxx test "
+            });
+        });
+        socket.on("agentstatus", function (data) {
+            console.log(data);
+        })
+        socket.on("status", function (data) {
+            console.log(data);
+        })
+        socket.on('message', function (data) {
+            console.log("客服收到消息：",data);
+            setTimeout(()=>{
+                socket.emit('message', {
+                    userid: "kevin001",
+                    type: "message",
+                    sessionid: "s00000001",
+                    agentuser: "dubai001",
+                    touser: "kevin001",
+                    message:"test xxx test "
+                });
+            },3000)
+        });
+
+        socket.on('disconnect', function () {
+
+        });
+
+        socket.on('satisfaction', function () {
+
+        });
+    </script>
+</body>
+</html>

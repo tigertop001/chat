@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./socket.io.js"></script>
+</head>
+<body>
+    <div>socket user test</div>
+    <script>
+        // 参数连接 ws://192.168.80.66:8036/im/user?userid=kevin001&touser=dubai001
+        var socket = io('ws://192.168.80.66:8036/im/user?userid=kevin001&touser=dubai001');
+
+        socket.on('connect', function () {
+            console.log("on connect ...");
+            socket.emit('message', {
+                userid: "kevin001",
+                type: "message",
+                sessionid: "s00000001",
+                agentuser: "dubai001",
+                touser: "dubai001",
+                message:"test xxx test "
+            });
+        })
+        socket.on("agentstatus", function (data) {
+
+        })
+        socket.on("status", function (data) {
+
+        })
+        socket.on('message', function (data) {
+            console.log("用户收到消息：",data);
+        });
+
+        socket.on('disconnect', function () {
+
+        });
+
+        socket.on('satisfaction', function () {
+
+        });
+        function sendMsg(msg){
+            socket.emit('message', msg);
+        }
+    </script>
+</body>
+</html>
